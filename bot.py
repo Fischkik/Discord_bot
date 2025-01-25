@@ -19,6 +19,6 @@ bot = discord.Bot(
 async def on_ready():
     print("bot is working")
 
-bot.load_extension("twitch_background")
+bot.load_extension("twitch_backround")
 bot.load_extension("greet")  
 bot.run(get_dc_api())

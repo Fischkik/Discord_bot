@@ -1,5 +1,5 @@
 from twitchAPI.twitch import Twitch
-from discord import commands, tasks
+from discord.ext import commands, tasks
 
 class Task(commands.Cog):
     def __init__(self, bot):
