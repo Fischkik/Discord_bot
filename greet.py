@@ -8,7 +8,7 @@ class Greet(commands.Cog):
         
     @slash_command()
     async def greet(self, ctx):
-        await ctx.respond(f"Na du nudel {ctx.author.menton}")
+        await ctx.respond(f"Na du nudel {ctx.author.mention}")
         
         
         
