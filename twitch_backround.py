@@ -5,6 +5,7 @@ from discord.ext import commands, tasks
 class Task(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.used = True
 
     def get_twitch_api(self) -> list:
         with open("api.txt", "r") as api_key:
@@ -14,8 +15,7 @@ class Task(commands.Cog):
     async def on_ready(self):
         self.twitch_noti.start()
 
-    async def live_huebi(self, used: int):
-        if used != 1:
+    async def live_huebi(self):
             channel = await self.bot.fetch_channel(1332758805146107964)
             user = await self.bot.fetch_user(690557122194309130)
             await channel.send(
@@ -23,7 +23,7 @@ class Task(commands.Cog):
                 "https://www.twitch.tv/huebi"
             )
 
-    @tasks.loop(seconds=60)
+    @tasks.loop(seconds=6)
     async def twitch_noti(self):
         if self.bot.is_closed():
             return
@@ -38,9 +38,9 @@ class Task(commands.Cog):
 
                 # Use async for to handle the async generator
                 async for streams in twitch.get_streams(user_id=[user_id]):
-                    if streams:
-                        await self.live_huebi(0)
-
+                    if streams and self.used :
+                        await self.live_huebi()
+                        self.used = False
 
 def setup(bot):
     bot.add_cog(Task(bot))
