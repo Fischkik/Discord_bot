@@ -1,13 +1,11 @@
 import discord
 from discord.ext import commands
-from discord.commands import slash_command
-
 
 class Greet(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command()
+    @commands.command()
     async def greet(self, ctx):
         await ctx.respond(f"Na du nudel {ctx.author.mention}")
 
