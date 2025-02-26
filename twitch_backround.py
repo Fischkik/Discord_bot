@@ -1,12 +1,19 @@
 from twitchAPI.twitch import Twitch
 from discord.ext import commands, tasks
-
+import datetime
 
 class Twitchbackground(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.used = True
 
+    def check_tomorrow(self):
+        today = datetime.datetime.now()
+        tomorrow = today + datetime.timedelta(days=1)
+        if today.date() == tomorrow.date():
+            self.used = True
+        
+    
     def get_twitch_api(self) -> list:
         with open("api.txt", "r") as api_key:
             return api_key.readlines()
@@ -28,6 +35,7 @@ class Twitchbackground(commands.Cog):
         if self.bot.is_closed():
             return
         print("checking for huebi")
+        self.check_tomorrow()
         client_id = self.get_twitch_api()[2].strip()
         client_secret = self.get_twitch_api()[1].strip()
         twitch = await Twitch(client_id, client_secret)
@@ -42,6 +50,3 @@ class Twitchbackground(commands.Cog):
                         await self.live_huebi()
                         self.used = False
 
-
-def setup(bot):
-    bot.add_cog(Task(bot))
