@@ -10,5 +10,3 @@ class Greet(commands.Cog):
         await ctx.respond(f"Na du nudel {ctx.author.mention}")
 
 
-def setup(bot):
-    bot.add_cog(Greet(bot))
